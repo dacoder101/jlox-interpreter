@@ -82,7 +82,7 @@ public class Scanner {
                 }
 
                 break;
-            case '#' {
+            case '#': {
                 while (peek() != '\n' && !atEnd()) advance();
                 break;
             }
@@ -104,7 +104,18 @@ public class Scanner {
                 addToken(match('=') ? LESS_EQUAL : LESS);
                 break;
 
-            default:
+            // Whitespace
+            case ' ':
+            case '\r':
+            case '\t':
+                break;
+
+            // Newline
+            case '\n':
+                line++;
+                break;
+
+            default: // Unsupported character
                 Lox.error(line, "Unexpected character: " + c);
                 break;
         }
@@ -118,6 +129,11 @@ public class Scanner {
 
         current++;
         return true;
+    }
+
+    private char peek() {
+        if (atEnd()) return '\0';
+        return source.charAt(current);
     }
 
     private char advance() {
