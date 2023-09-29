@@ -27,7 +27,8 @@ public class Lox {
         byte[] bytes = Files.readAllBytes(Paths.get(path)); // Reads bytes of invoked file
         run(new String(bytes, Charset.defaultCharset())); // Invokes run() after converting bytes
 
-        if (errorOccurred) System.exit(65); // Exit if the code has run into an error
+        if (errorOccurred)
+            System.exit(65); // Exit if the code has run into an error
     }
 
     private static void runPrompt() throws IOException {
