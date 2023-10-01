@@ -267,10 +267,6 @@ public class Scanner {
         return source.charAt(current++);
     }
 
-    private char advanceTwo() {
-        return source.charAt(current += 2);
-    }
-
     private void addToken(TokenType type) {
         addToken(type, null);
     }
