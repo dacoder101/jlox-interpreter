@@ -1,10 +1,12 @@
 package com.dacoder.lox;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -23,9 +25,21 @@ public class Lox {
         }
     }
 
-    private static void runFile(String path) throws IOException {
-        byte[] bytes = Files.readAllBytes(Paths.get(path)); // Reads bytes of invoked file
-        run(new String(bytes, Charset.defaultCharset())); // Invokes run() after converting bytes
+    private static void runFile(String path) throws NoSuchFileException, IOException {
+        try {
+            byte[] bytes = Files.readAllBytes(Paths.get(path)); // Reads bytes of invoked file
+            run(new String(bytes, Charset.defaultCharset())); // Invokes run() after converting bytes
+        } catch (Exception e) {
+            if (e instanceof NoSuchFileException) {
+                System.err.println("File not found: " + e.getMessage());
+                System.exit(2);
+            } else if (e instanceof IOException) {
+                System.err.println("An error occurred trying to read from the specified file: " + e.getMessage());
+                System.exit(2);
+            } else {
+                System.err.println("An unexpected exception occured: " + e.getMessage());
+            }
+        }
 
         if (errorOccurred)
             System.exit(65); // Exit if the code has run into an error
