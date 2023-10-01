@@ -37,7 +37,7 @@ public class Lox {
                 System.err.println("An error occurred trying to read from the specified file: " + e.getMessage());
                 System.exit(2);
             } else {
-                System.err.println("An unexpected exception occured: " + e.getMessage());
+                System.err.println("An unexpected exception occured: " + e.getMessage()); // yeah ik this aint very smart but deal with it
             }
         }
 
