@@ -97,13 +97,20 @@ public class Scanner {
 
                 break;
             case '/':
-                if (match('/')) {
+                if (match('*')) {
+                    blockComment();
+                } else if (match('/')) {
                     addToken(DOUBLE_SLASH);
                 } else {
                     addToken(SLASH);
                 }
 
                 break;
+            case '%':
+                addToken(MODULO);
+                break;
+
+            // MISC
             case '#': {
                 while (peek() != '\n' && !atEnd())
                     advance();
@@ -143,17 +150,37 @@ public class Scanner {
                 string();
                 break;
 
-            default: // Unsupported character
+            default:
                 if (isDigit(c)) {
                     number();
                 } else if (isAlpha(c)) {
                     identifier();
-                } else {
+                } else { // Unsupported character
                     Lox.error(line, "Unexpected character: " + c);
                     break;
                 }
         }
     }
+
+    private void blockComment() {
+        int nestingLevel = 1; // To track nested comments
+    
+        while (nestingLevel > 0 && !atEnd()) {
+            char currentChar = advance();
+    
+            if (currentChar == '/' && peek() == '*') {
+                advance(); // Consume '*'
+                nestingLevel++;
+            } else if (currentChar == '*' && peek() == '/') {
+                advance(); // Consume '/'
+                nestingLevel--;
+            } else if (currentChar == '\n') {
+                line++;
+            }
+        }
+    }
+    
+    
 
     private void string() {
         while (peek() != '"' && !atEnd()) {
@@ -238,6 +265,10 @@ public class Scanner {
 
     private char advance() {
         return source.charAt(current++);
+    }
+
+    private char advanceTwo() {
+        return source.charAt(current += 2);
     }
 
     private void addToken(TokenType type) {

@@ -2,7 +2,7 @@ package com.dacoder.lox;
 
 enum TokenType {
     LEFT_PAREN, RIGHT_PAREN, LEFT_BRACE, RIGHT_BRACE,
-    COMMA, DOT, MINUS, PLUS, SEMICOLON, SLASH, DOUBLE_SLASH, STAR, POWER,
+    COMMA, DOT, SEMICOLON, MINUS, PLUS, SLASH, DOUBLE_SLASH, MODULO, STAR, POWER,
 
     // One or two character tokens.
     BANG, BANG_EQUAL,
