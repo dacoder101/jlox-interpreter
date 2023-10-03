@@ -1,0 +1,5 @@
+NOTICE: These notes are NOT for a contributor to vitalize. These commands will likely not work and are only fitted for my own use case!
+
+GenerateAST: java -cp bin com.dacoder.tool.GenerateAst src/com/dacoder/lox
+
+Build JAR: jar cvfe jlox.jar com.dacoder.lox.Lox -C bin .
